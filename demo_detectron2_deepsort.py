@@ -22,7 +22,7 @@ class Detector(object):
         self.detectron2 = Detectron2(args)
 
         self.deepsort = DeepSort(args.deepsort_checkpoint, use_cuda=use_cuda)
-        self.total_counter = []
+        self.total_counter = [0]*100
 
     def __enter__(self):
         assert os.path.isfile(self.args.VIDEO_PATH), "Error: path error"
@@ -75,16 +75,20 @@ class Detector(object):
                     print("+++++++++++++++++++++++++++++++++++++bbox_xyxy, bbox_xyxy_detectron2", bbox_xyxy, bbox_xyxy_detectron2)
                     identities = current_counter = outputs[:, -1]
                     #print("+++++++++++++++++++++++++++++++++++++identities", identities)
+                    ordered_identities = []
                     for identity in identities:
-                        if not(identity in self.total_counter):
-                            self.total_counter.append(identity)                                       
-                    im = draw_bboxes(im, bbox_xyxy, identities, binary_masks)
+                        if not self.total_counter[identity]:
+                            self.total_counter[identity] = max(self.total_counter) + 1
+                        #if not(identity in self.total_counter):
+                         #   self.total_counter.append(identity)
+                        ordered_identities.append(self.total_counter[identity])                                       
+                    im = draw_bboxes(im, bbox_xyxy, ordered_identities, binary_masks)
                     #nums = "len(bbox_xyxy): {}, len(identities): {}, len(binary_masks): {}".format(len(bbox_xyxy), len(identities), len(binary_masks))
                     #im = cv2.putText(im, nums, (150, 150), cv2.FONT_HERSHEY_PLAIN, 2, [255,255,255], 2)
                     
             end = time.time()
             time_fps = "time: {}s, fps: {}".format(round(end - start, 2), round(1 / (end - start), 2))            
-            im = cv2.putText(im, "Total Hand Counter: "+str(len(self.total_counter)), (int(20), int(120)),0, 5e-3 * 200, (0,255,0),2)
+            im = cv2.putText(im, "Total Hand Counter: "+str(max(self.total_counter)), (int(20), int(120)),0, 5e-3 * 200, (0,255,0),2)
             im = cv2.putText(im, "Current Hand Counter: "+str(len(current_counter)),(int(20), int(80)),0, 5e-3 * 200, (0,255,0),2)
             im = cv2.putText(im, time_fps,(int(20), int(40)),0, 5e-3 * 200, (0,255,0),3)
             if self.args.display:
