@@ -1,5 +1,5 @@
 # D2DP
-FPV, Egocentric view hand detection, instance segmentation, hand mask tracking using detectron2, deepsort. \
+First Person View, Egocentric view Hand detection, instance segmentation, hand mask tracking using detectron2, deepsort. \
 Code in python using pytorch lib. \
 Paper updating. \
 For detectron2's issues, please refer to https://github.com/facebookresearch/detectron2 \
