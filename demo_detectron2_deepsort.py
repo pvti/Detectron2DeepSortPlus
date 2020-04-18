@@ -79,8 +79,6 @@ class Detector(object):
                     for identity in identities:
                         if not self.total_counter[identity]:
                             self.total_counter[identity] = max(self.total_counter) + 1
-                        #if not(identity in self.total_counter):
-                         #   self.total_counter.append(identity)
                         ordered_identities.append(self.total_counter[identity])                                       
                     im = draw_bboxes(im, bbox_xyxy, ordered_identities, binary_masks)
                     #nums = "len(bbox_xyxy): {}, len(identities): {}, len(binary_masks): {}".format(len(bbox_xyxy), len(identities), len(binary_masks))
