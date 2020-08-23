@@ -12,8 +12,9 @@ class Detectron2:
 
     def __init__(self, args):
         self.cfg = get_cfg()
-        self.cfg.merge_from_file("../detectron2/configs/COCO-InstanceSegmentation/mask_rcnn_R_50_FPN_3x.yaml")
-        self.cfg.MODEL.WEIGHTS = "../detectron2/projects/EgteaGaze+/EgteaGaze_mask_rcnn_R_50_FPN_3x/model_final.pth"
+        self.cfg.merge_from_file("/home/minhkv/tienpv_DO_NOT_REMOVE/detectron2/configs/COCO-InstanceSegmentation/mask_rcnn_R_50_FPN_3x.yaml")
+        #self.cfg.MODEL.WEIGHTS = "/home/minhkv/tienpv_DO_NOT_REMOVE/detectron2/projects/EgteaGaze+/EgteaGaze_mask_rcnn_R_50_FPN_3x/model_final.pth"
+        self.cfg.MODEL.WEIGHTS = "/home/minhkv/tienpv_DO_NOT_REMOVE/detectron2/projects/Thesis/output/model_final.pth"
         self.cfg.MODEL.ROI_HEADS.NUM_CLASSES = 1 #default for hand, FIX THIS!
         #self.cfg.MODEL.ROI_HEADS.SCORE_THRESH_TEST = 0.95  # set threshold for this model
         self.cfg.merge_from_list(args.opts)

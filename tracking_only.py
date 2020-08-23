@@ -6,9 +6,9 @@ from distutils.util import strtobool
 import cv2
 
 from deep_sort import DeepSort
-from detectron2_detection import Detectron2
 from util import draw_bboxes, draw_detections
-
+import json
+import numpy as np
 
 class Detector(object):
     def __init__(self, args):
@@ -16,25 +16,19 @@ class Detector(object):
         use_cuda = bool(strtobool(self.args.use_cuda))
         if args.display:
             cv2.namedWindow("test", cv2.WINDOW_NORMAL)
-            cv2.resizeWindow("test", args.display_width, args.display_height)
 
-        self.vdo = cv2.VideoCapture()
-        self.detectron2 = Detectron2(args)
 
         self.deepsort = DeepSort(args.deepsort_checkpoint, use_cuda=use_cuda)
         self.total_counter = [0]*1000
 
     def __enter__(self):
-        assert os.path.isfile(self.args.VIDEO_PATH), "Error: path error"
-        self.vdo.open(self.args.VIDEO_PATH)
-        self.im_width = int(self.vdo.get(cv2.CAP_PROP_FRAME_WIDTH))
-        self.im_height = int(self.vdo.get(cv2.CAP_PROP_FRAME_HEIGHT))
+        assert os.path.isfile(os.path.join(self.args.path, 'via_export_json.json')), "Error: path error, via_export_json.json not found"
+
 
         if self.args.save_path:
             fourcc = cv2.VideoWriter_fourcc(*'MJPG')
-            self.output = cv2.VideoWriter(self.args.save_path, fourcc, 1, (self.im_width, self.im_height))
+            self.output = cv2.VideoWriter(self.args.save_path, fourcc, 1, (1920, 1440))
 
-        assert self.vdo.isOpened()
         return self
 
     def __exit__(self, exc_type, exc_value, exc_traceback):
@@ -42,28 +36,44 @@ class Detector(object):
             print(exc_type, exc_value, exc_traceback)
 
     def detect(self):
-        while self.vdo.grab():
+        #while self.vdo.grab():
+        json_file = os.path.join(self.args.path, 'via_export_json.json')
+        with open(json_file) as f:
+            imgs_anns = json.load(f)
+        for idx, v in enumerate(imgs_anns.values()):
+            filename = os.path.join(self.args.path, v["filename"])
+            annos = v["regions"]
+            bbox_xcycwh, cls_conf, cls_ids, binary_masks = [], [], [], []
+            for anno in annos:
+                region_attributes = anno["region_attributes"]
+                if not region_attributes:
+                    break
+                anno = anno["shape_attributes"]
+                if anno["name"] != "polygon":
+                    break
+                px = anno["all_points_x"]
+                py = anno["all_points_y"]
+                poly = [(x + 0.5, y + 0.5) for x, y in zip(px, py)]
+                poly = [p for x in poly for p in x]
+                x0, y0, x1, y1 = np.min(px), np.min(py), np.max(px), np.max(py) 
+                #for all 9 class of micand, get hand only
+                if int(region_attributes["category_id"])>7:
+                    cls_ids.append(0)
+                    #cls_ids.append(int(region_attributes["category_id"])-1)
+                    bbox_xcycwh.append([(x1+x0)/2, (y1+y0)/2, (x1-x0), (y1-y0)])
+                    cls_conf.append(1)
+ 
             start = time.time()
-            _, im = self.vdo.retrieve()
-            # im = cv2.cvtColor(im, cv2.COLOR_BGR2RGB)
+            im = cv2.imread(filename)
             print('----------------------------------------------DEMO started-----------------------------------------------')            
-            bbox_xcycwh, cls_conf, cls_ids, cls_masks, bbox_xyxy_detectron2 = self.detectron2.detect(im)
-            #print('bbox_xcycwh, cls_conf, cls_ids, cls_masks', bbox_xcycwh, cls_conf, cls_ids, cls_masks)
-            
-            #if bbox_xcycwh is not None:
+            print(bbox_xcycwh, cls_conf, cls_ids, binary_masks)
+            bbox_xcycwh, cls_conf, cls_ids, binary_masks = np.array(bbox_xcycwh), np.array(cls_conf), np.array(cls_ids), np.array(binary_masks)
             current_counter = []
+            print(bbox_xcycwh)
             if len(bbox_xcycwh):
-                mask = cls_ids == 0 # select class person
-                #print('mask>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>', mask)
-
-                #print('bbox_xcycwh', bbox_xcycwh)
+                mask = cls_ids == 0 # select class hand
                 bbox_xcycwh = bbox_xcycwh[mask]
-                
-                #print('^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^cls_conf', cls_conf)
                 cls_conf = cls_conf[mask]
-                #print('^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^cls_masks[mask]', cls_conf[mask])
-                binary_masks = cls_masks[mask]
-                #binary_masks = cls_masks
                 
                 #draw detections after NMS, white box
                 
@@ -72,9 +82,7 @@ class Detector(object):
                 print('++++++++++++++++++++++++++++++++++++++ outputs of deepsort.update', outputs)
                 if len(outputs):
                     bbox_xyxy = outputs[:, :4]
-                    print("+++++++++++++++++++++++++++++++++++++bbox_xyxy, bbox_xyxy_detectron2", bbox_xyxy, bbox_xyxy_detectron2)
                     identities = current_counter = outputs[:, -1]
-                    #print("+++++++++++++++++++++++++++++++++++++identities", identities)
                     ordered_identities = []
                     for identity in identities:
                         if not self.total_counter[identity]:
@@ -100,34 +108,17 @@ class Detector(object):
 
 def parse_args():
     parser = argparse.ArgumentParser()
-    parser.add_argument("VIDEO_PATH", type=str)
-    parser.add_argument(
-        "--config-file",
-        default="/home/minhkv/tienpv_DO_NOT_REMOVE/detectron2/configs/COCO-InstanceSegemntation/mask_r_cnn_R_50_FPN_3x.yaml",
-        metavar="FILE",
-        help="path to detectron2 config file",
-    )
-    parser.add_argument(
-        "--confidence-threshold",
-        type=float,
-        default=0.5,
-        help="Minimum score for instance predictions to be shown",
+    parser.add_argument("--path", 
+            type=str,
+            default='/media/data3/EgoCentric_Nafosted/non_skip/train/',
+            help='path to folder contains detection groundtruth',
     )
     parser.add_argument("--deepsort_checkpoint", type=str, default="deep_sort/deep/checkpoint/ckpt.t7")
     parser.add_argument("--max_dist", type=float, default=0.3)
     parser.add_argument("--ignore_display", dest="display", action="store_false")
-    parser.add_argument("--display_width", type=int, default=800)
-    parser.add_argument("--display_height", type=int, default=600)
     parser.add_argument("--save_path", type=str, default="demo.avi")
     parser.add_argument("--use_cuda", type=str, default="True")
-    parser.add_argument(
-        "--opts",
-        help="Modify config options using the command-line 'KEY VALUE' pairs",
-        default=[],
-        nargs=argparse.REMAINDER,
-    )
     return parser.parse_args()
-
 
 if __name__ == "__main__":
     args = parse_args()
