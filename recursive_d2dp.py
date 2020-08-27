@@ -1,3 +1,4 @@
+#recusively inference on 36 original videos d2dp
 import os
 from tqdm import tqdm
 import argparse

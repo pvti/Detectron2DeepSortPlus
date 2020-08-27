@@ -57,7 +57,7 @@ class Detector(object):
                 poly = [p for x in poly for p in x]
                 x0, y0, x1, y1 = np.min(px), np.min(py), np.max(px), np.max(py) 
                 #for all 9 class of micand, get hand only
-                if int(region_attributes["category_id"])>7:
+                if int(region_attributes["category_id"])==1:
                     cls_ids.append(0)
                     #cls_ids.append(int(region_attributes["category_id"])-1)
                     bbox_xcycwh.append([(x1+x0)/2, (y1+y0)/2, (x1-x0), (y1-y0)])
