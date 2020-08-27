@@ -70,6 +70,11 @@ def draw_bboxes(img, bbox, identities, binary_masks, alpha = 0.33, offset=(0,0))
                 img[:, :, c] = np.where(mask > 0, img[:, :, c] * (1-alpha) + alpha*color[c]*255, img[:, :, c])
     return img
 
+def draw_polys(im, polys):
+    for poly in polys:
+        cv2.polylines(im, [poly], True, (255,255,255))
+    return im
+
 def draw_detections(detections, img):
     for det in detections:
         bbox = det.to_tlbr()
