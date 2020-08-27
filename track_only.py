@@ -6,7 +6,7 @@ from distutils.util import strtobool
 import cv2
 
 from deep_sort import DeepSort
-from util import draw_bboxes, draw_detections
+from util import draw_bboxes, draw_detections, draw_polys
 import json
 import numpy as np
 
@@ -43,7 +43,7 @@ class Detector(object):
         for idx, v in enumerate(imgs_anns.values()):
             filename = os.path.join(self.args.path, v["filename"])
             annos = v["regions"]
-            bbox_xcycwh, cls_conf, cls_ids, binary_masks = [], [], [], []
+            bbox_xcycwh, cls_conf, cls_ids, binary_masks, polys = [], [], [], [], []
             for anno in annos:
                 region_attributes = anno["region_attributes"]
                 if not region_attributes:
@@ -53,8 +53,9 @@ class Detector(object):
                     break
                 px = anno["all_points_x"]
                 py = anno["all_points_y"]
-                poly = [(x + 0.5, y + 0.5) for x, y in zip(px, py)]
-                poly = [p for x in poly for p in x]
+                
+                poly = np.array([[x, y] for x, y in zip(px, py)], np.int32).reshape((-1,1,2))
+                
                 x0, y0, x1, y1 = np.min(px), np.min(py), np.max(px), np.max(py) 
                 #for all 9 class of micand, get hand only
                 if int(region_attributes["category_id"])==1:
@@ -62,7 +63,7 @@ class Detector(object):
                     #cls_ids.append(int(region_attributes["category_id"])-1)
                     bbox_xcycwh.append([(x1+x0)/2, (y1+y0)/2, (x1-x0), (y1-y0)])
                     cls_conf.append(1)
- 
+                    polys.append(poly)
             start = time.time()
             im = cv2.imread(filename)
             print('----------------------------------------------DEMO started-----------------------------------------------')            
@@ -78,7 +79,6 @@ class Detector(object):
                 #draw detections after NMS, white box
                 
                 outputs, detections = self.deepsort.update(bbox_xcycwh, cls_conf, im)
-                im = draw_detections(detections, im)
                 print('++++++++++++++++++++++++++++++++++++++ outputs of deepsort.update', outputs)
                 if len(outputs):
                     bbox_xyxy = outputs[:, :4]
@@ -89,6 +89,8 @@ class Detector(object):
                             self.total_counter[identity] = max(self.total_counter) + 1
                         ordered_identities.append(self.total_counter[identity])                                       
                     im = draw_bboxes(im, bbox_xyxy, ordered_identities, binary_masks)
+                    im = draw_detections(detections, im)
+                    im = draw_polys(im, polys)
                     #nums = "len(bbox_xyxy): {}, len(identities): {}, len(binary_masks): {}".format(len(bbox_xyxy), len(identities), len(binary_masks))
                     #im = cv2.putText(im, nums, (150, 150), cv2.FONT_HERSHEY_PLAIN, 2, [255,255,255], 2)
                     
