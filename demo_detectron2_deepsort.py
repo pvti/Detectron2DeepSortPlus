@@ -68,7 +68,6 @@ class Detector(object):
                 #draw detections after NMS, white box
                 
                 outputs, detections = self.deepsort.update(bbox_xcycwh, cls_conf, im)
-                im = draw_detections(detections, im)
                 print('++++++++++++++++++++++++++++++++++++++ outputs of deepsort.update', outputs)
                 if len(outputs):
                     bbox_xyxy = outputs[:, :4]
@@ -79,7 +78,8 @@ class Detector(object):
                     for identity in identities:
                         if not self.total_counter[identity]:
                             self.total_counter[identity] = max(self.total_counter) + 1
-                        ordered_identities.append(self.total_counter[identity])                                       
+                        ordered_identities.append(self.total_counter[identity])      
+                    im = draw_detections(detections, im)                                 
                     im = draw_bboxes(im, bbox_xyxy, ordered_identities, binary_masks)
                     #nums = "len(bbox_xyxy): {}, len(identities): {}, len(binary_masks): {}".format(len(bbox_xyxy), len(identities), len(binary_masks))
                     #im = cv2.putText(im, nums, (150, 150), cv2.FONT_HERSHEY_PLAIN, 2, [255,255,255], 2)
