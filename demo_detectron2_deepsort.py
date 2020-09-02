@@ -20,13 +20,12 @@ class Detector(object):
 
         self.vdo = cv2.VideoCapture()
         self.detectron2 = Detectron2(args)
-
-        self.deepsort = DeepSort(args.deepsort_checkpoint, use_cuda=use_cuda)
+        self.deepsort = DeepSort(args.deepsort_checkpoint, nms_max_overlap=args.nms_max_overlap, use_cuda=use_cuda)
         self.total_counter = [0]*1000
 
     def __enter__(self):
-        assert os.path.isfile(self.args.VIDEO_PATH), "Error: path error"
-        self.vdo.open(self.args.VIDEO_PATH)
+        assert os.path.isfile(self.args.video_path), "Error: path error"
+        self.vdo.open(self.args.video_path)
         self.im_width = int(self.vdo.get(cv2.CAP_PROP_FRAME_WIDTH))
         self.im_height = int(self.vdo.get(cv2.CAP_PROP_FRAME_HEIGHT))
 
@@ -56,8 +55,9 @@ class Detector(object):
                 mask = cls_ids == 0 # select class person
                 #print('mask>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>', mask)
 
-                #print('bbox_xcycwh', bbox_xcycwh)
                 bbox_xcycwh = bbox_xcycwh[mask]
+
+                print('bbox_xcycwh', bbox_xcycwh)
                 
                 #print('^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^cls_conf', cls_conf)
                 cls_conf = cls_conf[mask]
@@ -100,7 +100,11 @@ class Detector(object):
 
 def parse_args():
     parser = argparse.ArgumentParser()
-    parser.add_argument("VIDEO_PATH", type=str)
+    parser.add_argument("--video_path",
+            type=str,
+            default='/media/data3/EgoCentric_Nafosted/non_skip/train/',
+            help='path to input video',
+    )
     parser.add_argument(
         "--config-file",
         default="/home/minhkv/tienpv_DO_NOT_REMOVE/detectron2/configs/COCO-InstanceSegemntation/mask_r_cnn_R_50_FPN_3x.yaml",
@@ -115,6 +119,12 @@ def parse_args():
     )
     parser.add_argument("--deepsort_checkpoint", type=str, default="deep_sort/deep/checkpoint/ckpt.t7")
     parser.add_argument("--max_dist", type=float, default=0.3)
+    parser.add_argument("--nms_max_overlap",
+            type=float,
+            default=0.5,
+            help='Non-max suppression threshold',
+    )
+ 
     parser.add_argument("--ignore_display", dest="display", action="store_false")
     parser.add_argument("--display_width", type=int, default=800)
     parser.add_argument("--display_height", type=int, default=600)

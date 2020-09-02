@@ -18,7 +18,7 @@ class Detector(object):
             cv2.namedWindow("test", cv2.WINDOW_NORMAL)
 
 
-        self.deepsort = DeepSort(args.deepsort_checkpoint, use_cuda=use_cuda)
+        self.deepsort = DeepSort(args.deepsort_checkpoint, nms_max_overlap=args.nms_max_overlap, use_cuda=use_cuda)
         self.total_counter = [0]*1000
 
     def __enter__(self):
@@ -115,8 +115,16 @@ def parse_args():
             default='/media/data3/EgoCentric_Nafosted/non_skip/train/',
             help='path to folder contains detection groundtruth',
     )
-    parser.add_argument("--deepsort_checkpoint", type=str, default="deep_sort/deep/checkpoint/ckpt.t7")
+    parser.add_argument("--deepsort_checkpoint",
+            type=str,
+            default="deep_sort/deep/checkpoint/ckpt.t7"
+    )
     parser.add_argument("--max_dist", type=float, default=0.3)
+    parser.add_argument("--nms_max_overlap",
+            type=float,
+            default=0.5,
+            help='Non-max suppression threshold',
+    )
     parser.add_argument("--ignore_display", dest="display", action="store_false")
     parser.add_argument("--save_path", type=str, default="demo.avi")
     parser.add_argument("--use_cuda", type=str, default="True")

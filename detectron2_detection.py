@@ -43,11 +43,16 @@ class Detectron2:
 
             if _class == 0:
                 x0, y0, x1, y1 = box
-                bbox_xcycwh.append([(x1 + x0) / 2, (y1 + y0) / 2, (x1 - x0), (y1 - y0)])
-                cls_conf.append(score)
-                cls_ids.append(_class)
-                cls_masks.append(mask)
-                bbox_xyxy.append(box)
+                xc = (x1+x0)/2
+                yc = (y1+y0)/2
+                w = x1-x0
+                h = y1-y0
+                if (xc>1) and (yc>1) and (w>1) and (h>1):
+                    bbox_xcycwh.append([xc, yc, w, h])
+                    cls_conf.append(score)
+                    cls_ids.append(_class)
+                    cls_masks.append(mask)
+                    bbox_xyxy.append(box)
         #print('np.array(bbox_xcycwh, dtype=np.float64), np.array(cls_conf), np.array(cls_ids), np.array(cls_masks)', np.array(bbox_xcycwh, dtype=np.float64), np.array(cls_conf), np.array(cls_ids), np.array(cls_masks))
         #print('scores==np.array(cls_conf), classes==np.array(cls_ids), masks == np.array(cls_masks)', scores==np.array(cls_conf), classes==np.array(cls_ids), masks == np.array(cls_masks))
         return np.array(bbox_xcycwh, dtype=np.float64), np.array(cls_conf), np.array(cls_ids), np.array(cls_masks), np.array(bbox_xyxy)

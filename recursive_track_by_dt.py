@@ -15,7 +15,7 @@ def main():
         file_name = directory + '.avi'
         input_vid = os.path.join(args.root_path, directory) + '/' + file_name
         output = os.path.join(args.root_path, file_name)
-        command = 'python3 demo_detectron2_deepsort.py ' + input_vid + ' --config-file /home/minhkv/tienpv_DO_NOT_REMOVE/detectron2/configs/COCO-InstanceSegmentation/mask_rcnn_R_50_FPN_3x.yaml ' + '--ignore_display ' + ' --save_path ' + output + ' --opts MODEL.WEIGHTS /home/minhkv/tienpv_DO_NOT_REMOVE/detectron2/projects/Thesis/output/model_final.pth'
+        command = 'python3 demo_detectron2_deepsort.py --video_path ' + input_vid + ' --config-file /home/minhkv/tienpv_DO_NOT_REMOVE/detectron2/configs/COCO-InstanceSegmentation/mask_rcnn_R_50_FPN_3x.yaml ' + '--ignore_display ' + ' --save_path ' + output + ' --opts MODEL.WEIGHTS /home/minhkv/tienpv_DO_NOT_REMOVE/detectron2/projects/Thesis/output/model_final.pth'
         print(command)
         os.system(command)
 
