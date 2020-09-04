@@ -44,11 +44,12 @@ class Detector(object):
         while self.vdo.grab():
             start = time.time()
             _, im = self.vdo.retrieve()
-            # im = cv2.cvtColor(im, cv2.COLOR_BGR2RGB)
             print('----------------------------------------------DEMO started-----------------------------------------------')            
-            bbox_xcycwh, cls_conf, cls_ids, cls_masks, bbox_xyxy_detectron2 = self.detectron2.detect(im)
+            bbox_xcycwh, cls_conf, cls_ids, cls_masks, region = self.detectron2.detect(im)
             #print('bbox_xcycwh, cls_conf, cls_ids, cls_masks', bbox_xcycwh, cls_conf, cls_ids, cls_masks)
             
+            if args.region_based:
+                im = region
             #if bbox_xcycwh is not None:
             current_counter = []
             if len(bbox_xcycwh):
@@ -71,7 +72,7 @@ class Detector(object):
                 print('++++++++++++++++++++++++++++++++++++++ outputs of deepsort.update', outputs)
                 if len(outputs):
                     bbox_xyxy = outputs[:, :4]
-                    print("+++++++++++++++++++++++++++++++++++++bbox_xyxy, bbox_xyxy_detectron2", bbox_xyxy, bbox_xyxy_detectron2)
+                    #print("+++++++++++++++++++++++++++++++++++++bbox_xyxy, bbox_xyxy_detectron2", bbox_xyxy, bbox_xyxy_detectron2)
                     identities = current_counter = outputs[:, -1]
                     #print("+++++++++++++++++++++++++++++++++++++identities", identities)
                     ordered_identities = []
@@ -125,6 +126,7 @@ def parse_args():
             help='Non-max suppression threshold',
     )
  
+    parser.add_argument("--region_based", type=bool, default=False, help="True if track on hand region only. ThanhHai's recommendation")
     parser.add_argument("--ignore_display", dest="display", action="store_false")
     parser.add_argument("--display_width", type=int, default=800)
     parser.add_argument("--display_height", type=int, default=600)

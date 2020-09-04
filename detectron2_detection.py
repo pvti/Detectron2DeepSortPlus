@@ -3,7 +3,7 @@ from detectron2.utils.logger import setup_logger
 setup_logger()
 
 import numpy as np
-
+import cv2
 from detectron2.engine import DefaultPredictor
 from detectron2.config import get_cfg
 
@@ -13,7 +13,6 @@ class Detectron2:
     def __init__(self, args):
         self.cfg = get_cfg()
         self.cfg.merge_from_file("/home/minhkv/tienpv_DO_NOT_REMOVE/detectron2/configs/COCO-InstanceSegmentation/mask_rcnn_R_50_FPN_3x.yaml")
-        #self.cfg.MODEL.WEIGHTS = "/home/minhkv/tienpv_DO_NOT_REMOVE/detectron2/projects/EgteaGaze+/EgteaGaze_mask_rcnn_R_50_FPN_3x/model_final.pth"
         self.cfg.MODEL.WEIGHTS = "/home/minhkv/tienpv_DO_NOT_REMOVE/detectron2/projects/Thesis/output/model_final.pth"
         self.cfg.MODEL.ROI_HEADS.NUM_CLASSES = 1 #default for hand, FIX THIS!
         #self.cfg.MODEL.ROI_HEADS.SCORE_THRESH_TEST = 0.95  # set threshold for this model
@@ -32,12 +31,12 @@ class Detectron2:
         boxes = outputs["instances"].pred_boxes.tensor.cpu().numpy()
         classes = outputs["instances"].pred_classes.cpu().numpy()
         scores = outputs["instances"].scores.cpu().numpy()
-        masks = outputs["instances"].pred_masks.cpu().numpy()
+        predict_masks = outputs["instances"].pred_masks
+        masks = predict_masks.cpu().numpy()
         print('------------------------------------- DETECTRON2 detect-----------------------------------------------')
         print('len(boxes), len(classes), len(scores), len(masks)', len(boxes), len(classes), len(scores), len(masks))
         #print('boxes, classes, scores, masks', boxes, classes, scores, masks)
         bbox_xcycwh, cls_conf, cls_ids, cls_masks = [], [], [], []
-        bbox_xyxy = []
 
         for (box, _class, score, mask) in zip(boxes, classes, scores, masks):
 
@@ -52,7 +51,12 @@ class Detectron2:
                     cls_conf.append(score)
                     cls_ids.append(_class)
                     cls_masks.append(mask)
-                    bbox_xyxy.append(box)
-        #print('np.array(bbox_xcycwh, dtype=np.float64), np.array(cls_conf), np.array(cls_ids), np.array(cls_masks)', np.array(bbox_xcycwh, dtype=np.float64), np.array(cls_conf), np.array(cls_ids), np.array(cls_masks))
-        #print('scores==np.array(cls_conf), classes==np.array(cls_ids), masks == np.array(cls_masks)', scores==np.array(cls_conf), classes==np.array(cls_ids), masks == np.array(cls_masks))
-        return np.array(bbox_xcycwh, dtype=np.float64), np.array(cls_conf), np.array(cls_ids), np.array(cls_masks), np.array(bbox_xyxy)
+
+        temp = np.zeros_like(im[:, :, 0])
+        for i in range(len(predict_masks)):
+            predict_mask_i = predict_masks[i]
+            temp += np.array(predict_mask_i.to("cpu").numpy()).astype(np.uint8)
+        region = im.copy()
+        region[temp == 0] = 0
+        region[temp!= 0] = im[temp != 0]
+        return np.array(bbox_xcycwh, dtype=np.float64), np.array(cls_conf), np.array(cls_ids), np.array(cls_masks), region 
