@@ -6,7 +6,7 @@ from distutils.util import strtobool
 import cv2
 
 from deep_sort import DeepSort
-from detectron2_detection import Detectron2
+from detectron2_dt import Detectron2
 from util import draw_bboxes, draw_detections
 
 
@@ -32,6 +32,9 @@ class Detector(object):
         if self.args.save_path:
             fourcc = cv2.VideoWriter_fourcc(*'MJPG')
             self.output = cv2.VideoWriter(self.args.save_path, fourcc, 1, (self.im_width, self.im_height))
+        if self.args.seqtxt2write:
+            seqtxt = open(self.args.seqtxt2write, "w+")
+            self.seqtxt = seqtxt
 
         assert self.vdo.isOpened()
         return self
@@ -41,7 +44,9 @@ class Detector(object):
             print(exc_type, exc_value, exc_traceback)
 
     def detect(self):
+        frameID = 0
         while self.vdo.grab():
+            frameID+=1
             start = time.time()
             _, im = self.vdo.retrieve()
             print('----------------------------------------------DEMO started-----------------------------------------------')            
@@ -58,7 +63,7 @@ class Detector(object):
 
                 bbox_xcycwh = bbox_xcycwh[mask]
 
-                print('bbox_xcycwh', bbox_xcycwh)
+                #print('bbox_xcycwh', bbox_xcycwh)
                 
                 #print('^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^cls_conf', cls_conf)
                 cls_conf = cls_conf[mask]
@@ -84,7 +89,18 @@ class Detector(object):
                     im = draw_bboxes(im, bbox_xyxy, ordered_identities, binary_masks)
                     #nums = "len(bbox_xyxy): {}, len(identities): {}, len(binary_masks): {}".format(len(bbox_xyxy), len(identities), len(binary_masks))
                     #im = cv2.putText(im, nums, (150, 150), cv2.FONT_HERSHEY_PLAIN, 2, [255,255,255], 2)
-                    
+                    #write to seq.txt
+                    if self.args.seqtxt2write:
+                        for i in range(len(ordered_identities)):
+                            trackID = ordered_identities[i]
+                            #bbox_yxyx is LIST of box_xxy
+                            box_xyxy = bbox_xyxy[i]
+                            top = box_xyxy[0]
+                            left = box_xyxy[1]
+                            width = box_xyxy[2] - box_xyxy[0]
+                            height = box_xyxy[3] - box_xyxy[1]
+                            line = [frameID, trackID, top, left, width, height, 1, 1, 1]
+                            self.seqtxt.write(",".join(str(item) for item in line) + "\n")
             end = time.time()
             time_fps = "time: {}s, fps: {}".format(round(end - start, 2), round(1 / (end - start), 2))            
             im = cv2.putText(im, "Total Hand Counter: "+str(max(self.total_counter)), (int(20), int(120)),0, 5e-3 * 200, (0,255,0),2)
@@ -94,10 +110,8 @@ class Detector(object):
                 cv2.imshow("test", im)
                 cv2.waitKey(1)
 
-            if self.args.save_path:
-                self.output.write(im)
-            # exit(0)
-
+            #if self.args.save_path:
+                #self.output.write(im)
 
 def parse_args():
     parser = argparse.ArgumentParser()
@@ -132,6 +146,12 @@ def parse_args():
     parser.add_argument("--display_height", type=int, default=600)
     parser.add_argument("--save_path", type=str, default="demo.avi")
     parser.add_argument("--use_cuda", type=str, default="True")
+    parser.add_argument(
+        "--seqtxt2write",
+        type=str,
+        default="/media/data3/EgoCentric_Nafosted/mot/test/GH010383_5_462_968_1.txt",
+        help="Write tracking results in MOT16 format to file seqtxt2write. To evaluate using pymotmetrics",
+    )
     parser.add_argument(
         "--opts",
         help="Modify config options using the command-line 'KEY VALUE' pairs",

@@ -50,6 +50,7 @@ def non_max_suppression(boxes, max_bbox_overlap, scores=None):
         idxs = np.argsort(scores)
     else:
         idxs = np.argsort(y2)
+    #idxs = np.argsort(y2)
 
     while len(idxs) > 0:
         last = len(idxs) - 1
@@ -69,5 +70,4 @@ def non_max_suppression(boxes, max_bbox_overlap, scores=None):
         idxs = np.delete(
             idxs, np.concatenate(
                 ([last], np.where(overlap > max_bbox_overlap)[0])))
-
     return pick
