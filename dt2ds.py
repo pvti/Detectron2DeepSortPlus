@@ -70,9 +70,11 @@ def main():
         end = time.time()
         im = cv2.putText(im, "Frame ID: "+str(frameID+1), (20,20), 0, 5e-3 * 200, (0,255,0), 2) 
         time_fps = "Time: {}s, fps: {}".format(round(end - start, 2), round(1 / (end - start), 2))            
+        im = cv2.putText(im, time_fps,(20, 40), 0, 5e-3 * 200, (0,255,0), 3)      
+        im = cv2.putText(im, os.path.basename(args.config_file) + ' ' + args.region_based + ' ' + args.tracker, (20, 100), 0, 5e-3*200, (0,255,0), 3) 
+
         im = cv2.putText(im, "Total Hand Counter: "+str(max(total_counter)), (20, 120), 0, 5e-3 * 200, (0,255,0), 2)
         im = cv2.putText(im, "Current Hand Counter: "+str(len(current_counter)),(20, 80), 0, 5e-3 * 200, (0,255,0), 2)
-        im = cv2.putText(im, time_fps,(20, 40), 0, 5e-3 * 200, (0,255,0), 3)      
         if args.display:
             cv2.imshow("out_vid", im)
             cv2.waitKey(0)
@@ -147,7 +149,7 @@ def get_parser():
     parser.add_argument(
         "--out_txt",
         type=str,
-        default="/media/data3/EgoCentric_Nafosted/mot/test/GH010383_5_462_968_1.txt",
+        default="output_txt.txt",
         help="Write tracking results in MOT16 format to file seqtxt2write. To evaluate using pymotmetrics",
     )
     parser.add_argument(

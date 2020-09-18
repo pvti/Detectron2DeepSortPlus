@@ -1,6 +1,5 @@
 import numpy as np
 import cv2
-from deep_sort import DeepSort
 from collections import deque
 
 pts = [deque(maxlen=30) for _ in range(1000)]
