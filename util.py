@@ -33,7 +33,7 @@ def draw_bbox(img, box, cls_name, identity=None, offset=(0,0)):
     return img
 
 
-def draw_bboxes(img, bbox, identities, binary_masks, alpha = 0.33, offset=(0,0)):
+def draw_bboxes(img, bbox, identities, binary_masks=[], alpha = 0.33, offset=(0,0)):
     for i,box in enumerate(bbox):
         x1,y1,x2,y2 = [int(i) for i in box]
         x1 += offset[0]

@@ -46,12 +46,15 @@ def main():
             outputs = sort.update(dets)
             outputs = np.array([element.clip(min=0) for element in outputs]).astype(int)
         else:
-            ccwh_boxes = []
-            for det in dets:
-                ccwh_boxes.append([(det[0]+det[2])/2, (det[1]+det[3])/2, det[2]-det[0], det[3]-det[1]])  
-            ccwh_boxes = np.array(ccwh_boxes)
-            confidences = np.ones(len(dets))
-            outputs, __ = deepsort.update(ccwh_boxes, confidences, im)
+            if len(dets):
+                ccwh_boxes = []
+                for det in dets:
+                    ccwh_boxes.append([(det[0]+det[2])/2, (det[1]+det[3])/2, det[2]-det[0], det[3]-det[1]])  
+                ccwh_boxes = np.array(ccwh_boxes)
+                confidences = np.ones(len(dets))
+                outputs, __ = deepsort.update(ccwh_boxes, confidences, im)
+            else:
+                outputs = []
         current_counter = []
         if len(outputs):
             tlbr_boxes = outputs[:, :4]
@@ -68,13 +71,12 @@ def main():
                     line = [frameID+1, ordered_identities[i], tlbr[0], tlbr[1], tlbr[2]-tlbr[0], tlbr[3]-tlbr[1], 1, 1, 1]
                     out_txt.write(",".join(str(item) for item in line) + "\n")
         end = time.time()
-        im = cv2.putText(im, "Frame ID: "+str(frameID+1), (20,20), 0, 5e-3 * 200, (0,255,0), 2) 
+        im = cv2.putText(im, "Frame ID: "+str(frameID+1), (20,30), 0, 5e-3 * 200, (0,255,0), 2) 
         time_fps = "Time: {}s, fps: {}".format(round(end - start, 2), round(1 / (end - start), 2))            
-        im = cv2.putText(im, time_fps,(20, 40), 0, 5e-3 * 200, (0,255,0), 3)      
-        im = cv2.putText(im, os.path.basename(args.config_file) + ' ' + args.region_based + ' ' + args.tracker, (20, 100), 0, 5e-3*200, (0,255,0), 3) 
-
-        im = cv2.putText(im, "Total Hand Counter: "+str(max(total_counter)), (20, 120), 0, 5e-3 * 200, (0,255,0), 2)
-        im = cv2.putText(im, "Current Hand Counter: "+str(len(current_counter)),(20, 80), 0, 5e-3 * 200, (0,255,0), 2)
+        im = cv2.putText(im, time_fps,(20, 60), 0, 5e-3 * 200, (0,255,0), 3)      
+        im = cv2.putText(im, os.path.basename(args.config_file) + ' ' + args.tracker, (20, 90), 0, 5e-3*200, (0,255,0), 3) 
+        im = cv2.putText(im, "Current Hand Counter: "+str(len(current_counter)),(20, 120), 0, 5e-3 * 200, (0,255,0), 2)
+        im = cv2.putText(im, "Total Hand Counter: "+str(max(total_counter)), (20, 150), 0, 5e-3 * 200, (0,255,0), 2)
         if args.display:
             cv2.imshow("out_vid", im)
             cv2.waitKey(0)
@@ -91,7 +93,7 @@ def get_parser():
     )
     parser.add_argument(
         "--config-file",
-        default="/home/minhkv/tienpv_DO_NOT_REMOVE/detectron2/configs/COCO-InstanceSegemntation/mask_r_cnn_R_50_FPN_3x.yaml",
+        default="../detectron2/configs/COCO-InstanceSegmentation/mask_rcnn_R_50_FPN_3x.yaml",
         metavar="FILE",
         help="path to detectron2 config file",
     )

@@ -7,7 +7,7 @@ def get_parser():
     parser = argparse.ArgumentParser(description="inference vids")
     parser.add_argument(
         "--root_path",
-        default="/media/data3/EgoCentric_Nafosted/non_skip/train/",
+        default="/media/data3/EgoCentric_Nafosted/micand26/gt/",
         help="Root path",
     )
     parser.add_argument(

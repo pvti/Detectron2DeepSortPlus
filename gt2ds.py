@@ -62,12 +62,15 @@ def main():
             outputs = sort.update(dets)
             outputs = np.array([element.clip(min=0) for element in outputs]).astype(int)
         else:
-            ccwh_boxes = []
-            for det in dets:
-                ccwh_boxes.append([(det[0]+det[2])/2, (det[1]+det[3])/2, det[2]-det[0], det[3]-det[1]])  
-            ccwh_boxes = np.array(ccwh_boxes)
-            confidences = np.ones(len(dets))
-            outputs, __ = deepsort.update(ccwh_boxes, confidences, im)
+            if len(dets):
+                ccwh_boxes = []
+                for det in dets:
+                    ccwh_boxes.append([(det[0]+det[2])/2, (det[1]+det[3])/2, det[2]-det[0], det[3]-det[1]])  
+                ccwh_boxes = np.array(ccwh_boxes)
+                confidences = np.ones(len(dets))
+                outputs, __ = deepsort.update(ccwh_boxes, confidences, im)
+            else:
+                outputs = []
         if len(outputs):
             tlbr_boxes = outputs[:, :4]
             identities = current_counter = outputs[:, -1]
