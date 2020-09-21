@@ -25,9 +25,3 @@ class Yolov5Detector:
         else:
             det = []
         return det
-
-if __name__ == '__main__':
-    import cv2
-    detector = Yolov5Detector(weights='weights/best.pt', device='cuda:0')
-    im = cv2.imread('/home/n/micand26/gt/GH010374_6_4944_6241_1/0000.png')
-    detector.detect(im)
