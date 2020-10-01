@@ -24,7 +24,7 @@ def main():
         out_vid = cv2.VideoWriter(
             filename=args.out_vid,
             fourcc=cv2.VideoWriter_fourcc(*'MJPG'),
-            fps=1.0,
+            fps=args.fps,
             frameSize=(1920, 1440),
         )
     if args.out_txt:
@@ -88,7 +88,7 @@ def get_parser():
     parser = argparse.ArgumentParser(description="Detectron2 to (Deep)SORT demo")
     parser.add_argument("--input", 
          type=str,
-         default='/media/data3/EgoCentric_Nafosted/non_skip/train/',
+         default='/media/data3/EgoCentric_Nafosted/micand26/gt/',
          help='path to input video', 
     )
     parser.add_argument(
@@ -105,9 +105,9 @@ def get_parser():
     )
     parser.add_argument(
         "--region_based",
-        type=bool,
-        default=False,
-        help="True if track on hand region only. ThanhHai's recommendation",
+        type=int,
+        default=0,
+        help="1 if track on hand region only. ThanhHai's recommendation",
     )
     parser.add_argument("--tracker",
         type=str,
@@ -135,6 +135,12 @@ def get_parser():
         type=bool,
         default=False,
         help="Streaming frames to display",
+    )
+    parser.add_argument(
+        "--fps",
+        type=float,
+        default=30.0,
+        help="Output video Frame Per Second",
     )
     parser.add_argument(
         "--out_vid", 

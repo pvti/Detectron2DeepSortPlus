@@ -23,7 +23,7 @@ def main():
         out_vid = cv2.VideoWriter(
             filename=args.out_vid,
             fourcc=cv2.VideoWriter_fourcc(*'MJPG'),
-            fps=1.0,
+            fps=args.fps,
             frameSize=(1920, 1440),
         )
     if args.out_txt:
@@ -48,7 +48,7 @@ def main():
             px = anno["all_points_x"]
             py = anno["all_points_y"]
             poly = np.array([[x, y] for x, y in zip(px, py)], np.int32).reshape((-1,1,2))
-            if int(region_attributes["category_id"])==1:
+            if int(region_attributes["category_id"]):
                 dets.append([np.min(px), np.min(py), np.max(px), np.max(py), 1])
                 polys.append(poly)
         start = time.time()
@@ -103,7 +103,7 @@ def get_parser():
     parser = argparse.ArgumentParser(description="Grounttruth to (Deep)SORT demo")
     parser.add_argument("--input", 
          type=str,
-         default='/media/data3/EgoCentric_Nafosted/non_skip/train/',
+         default='/media/data3/EgoCentric_Nafosted/micand26/gt/',
          help='path to input folder contains detection groundtruth', 
     )
     parser.add_argument("--tracker",
@@ -132,6 +132,12 @@ def get_parser():
         type=bool,
         default=False,
         help="Streaming frames to display",
+    )
+    parser.add_argument(
+        "--fps",
+        type=float,
+        default=30.0,
+        help="Output video Frame Per Second",
     )
     parser.add_argument(
         "--out_vid", 

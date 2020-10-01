@@ -19,13 +19,13 @@ def get_parser():
     parser.add_argument(
         "--region_based",
         type=str,
-        default='False',
+        default='0',
         help="Region based",
     )
     parser.add_argument(
         "--model_weights",
         type=str,
-        default='/home/minhkv/tienpv_DO_NOT_REMOVE/detectron2/projects/Thesis/output/model_final.pth',
+        default='/home/minhkv/tienpv_DO_NOT_REMOVE/detectron2/projects/micand26_maskrcnnr50fpn3x/output/model_final.pth',
         help="Path to model weights",
     )
     parser.add_argument(
