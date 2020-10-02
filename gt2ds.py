@@ -15,7 +15,8 @@ from util import draw_bboxes, draw_polys
 def main():
     args = get_parser().parse_args()
     if args.display:
-        cv2.namedWindow("Groundtruth2(Deep)Sort", cv2.WINDOW_NORMAL)
+        cv2.namedWindow("out_vid", cv2.WINDOW_NORMAL)
+        cv2.resizeWindow("out_vid", 960, 720)
     sort = Sort()
     deepsort = DeepSort(args.deepsort_checkpoint, nms_max_overlap=args.nms_max_overlap, use_cuda=bool(strtobool(args.use_cuda)))
     assert os.path.isfile(os.path.join(args.input, 'via_export_json.json')), "Error: path error, via_export_json.json not found"
@@ -95,7 +96,7 @@ def main():
         im = cv2.putText(im, "Total Hand Counter: "+str(max(total_counter)), (20, 180), 0, 5e-3 * 200, (0,255,0), 2)
         if args.display:
             cv2.imshow("out_vid", im)
-            cv2.waitKey(0)
+            cv2.waitKey(1)
         if args.out_vid:
             out_vid.write(im)
             
