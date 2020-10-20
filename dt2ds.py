@@ -6,12 +6,49 @@ import cv2
 import numpy as np
 from tqdm import tqdm
 
-from detectron2_dt import detectron2
+#from detectron2_dt import detectron2
 
 from sort import Sort
 from deep_sort import DeepSort
 
 from util import draw_bboxes, draw_detections
+
+
+from detectron2.utils.logger import setup_logger
+import numpy as np
+from detectron2.engine import DefaultPredictor
+from detectron2.config import get_cfg
+
+def detectron2(im, args, predictor):
+    #predictor = DefaultPredictor(setup_cfg(args))
+    predictions = predictor(im)
+    boxes = predictions["instances"].pred_boxes.tensor.cpu().numpy()
+    scores = predictions["instances"].scores.cpu().numpy()
+    dets = []
+    for (box, score) in zip(boxes, scores):
+        t, l, b, r = box
+        dets.append([t, l, b, r, score])
+    if os.path.basename(args.config_file).split('_')[0] == 'mask':
+        predict_masks = predictions["instances"].pred_masks
+        masks = predict_masks.cpu().numpy()
+        temp = np.zeros_like(im[:, :, 0])
+        for i in range(len(predict_masks)):
+            predict_mask_i = predict_masks[i]
+            temp += np.array(predict_mask_i.to("cpu").numpy()).astype(np.uint8)
+        region = im.copy()
+        region[temp == 0] = 0
+        region[temp!= 0] = im[temp != 0]
+        return dets, np.array(masks), region
+    return dets, [], []
+
+def setup_cfg(args):
+    cfg = get_cfg()
+    cfg.merge_from_file(args.config_file)
+    cfg.MODEL.ROI_HEADS.NUM_CLASSES = 1
+    cfg.MODEL.ROI_HEADS.SCORE_THRESH_TEST = args.confidence_threshold
+    cfg.merge_from_list(args.opts)
+    return cfg
+
 
 def main():
     args = get_parser().parse_args()
@@ -21,6 +58,7 @@ def main():
     sort = Sort()
     deepsort = DeepSort(args.deepsort_checkpoint, nms_max_overlap=args.nms_max_overlap, use_cuda=bool(strtobool(args.use_cuda)))
     assert os.path.isfile(args.input), "Error: path error, input file not found"
+    
     if args.out_vid:
         out_vid = cv2.VideoWriter(
             filename=args.out_vid,
@@ -28,15 +66,17 @@ def main():
             fps=args.fps,
             frameSize=(1920, 1440),
         )
+    
     if args.out_txt:
         out_txt = open(args.out_txt, "w+")
     total_counter = [0]*1000
     inp_vid = cv2.VideoCapture(args.input)
     num_frames = int(inp_vid.get(cv2.CAP_PROP_FRAME_COUNT))
+    predictor = DefaultPredictor(setup_cfg(args))
     for frameID in tqdm(range(num_frames)):
         ret, im = inp_vid.read()
         start = time.time()
-        dets, masks, region = detectron2(im, args)
+        dets, masks, region = detectron2(im, args, predictor)
         if args.region_based:
             im = region
         if args.tracker == 'sort':
@@ -71,6 +111,7 @@ def main():
                     tlbr = tlbr_boxes[i]
                     line = [frameID+1, ordered_identities[i], tlbr[0], tlbr[1], tlbr[2]-tlbr[0], tlbr[3]-tlbr[1], 1, 1, 1]
                     out_txt.write(",".join(str(item) for item in line) + "\n")
+        
         end = time.time()
         im = cv2.putText(im, "Frame ID: "+str(frameID+1), (20,30), 0, 5e-3 * 200, (0,255,0), 2) 
         time_fps = "Time: {}s, fps: {}".format(round(end - start, 2), round(1 / (end - start), 2))            

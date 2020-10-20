@@ -8,7 +8,7 @@ def get_parser():
     parser.add_argument(
         "--root_path",
         type=str,
-        default='/media/data3/EgoCentric_Nafosted/micand26/gt/',
+        default='/media/data3/EgoCentric_Nafosted/micand30/gt/',
         help="Root path",
     )
     parser.add_argument(
@@ -20,13 +20,13 @@ def get_parser():
     parser.add_argument(
         "--out_vids",
         type=str,
-        default='/media/data3/EgoCentric_Nafosted/non_skip/out_vids/',
+        default='/media/data3/EgoCentric_Nafosted/micand30/out_vids/gt2s/',
         help='Path to folder to save output videos',
     )
     parser.add_argument(
         "--out_txts",
         type=str,
-        default='/media/data3/EgoCentric_Nafosted/mot/test/',
+        default='/media/data3/EgoCentric_Nafosted/micand30/test/gt2s/',
         help='Path to folder to save output sequence texts',
     )
     return parser

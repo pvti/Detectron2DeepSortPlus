@@ -20,6 +20,7 @@ def main():
     sort = Sort()
     deepsort = DeepSort(args.deepsort_checkpoint, nms_max_overlap=args.nms_max_overlap, use_cuda=bool(strtobool(args.use_cuda)))
     assert os.path.isfile(os.path.join(args.input, 'via_export_json.json')), "Error: path error, via_export_json.json not found"
+    '''
     if args.out_vid:
         out_vid = cv2.VideoWriter(
             filename=args.out_vid,
@@ -27,6 +28,7 @@ def main():
             fps=args.fps,
             frameSize=(1920, 1440),
         )
+    '''
     if args.out_txt:
         out_txt = open(args.out_txt, "w+")
 
@@ -97,8 +99,10 @@ def main():
         if args.display:
             cv2.imshow("out_vid", im)
             cv2.waitKey(1)
+        '''
         if args.out_vid:
             out_vid.write(im)
+        '''
             
 def get_parser():
     parser = argparse.ArgumentParser(description="Grounttruth to (Deep)SORT demo")
