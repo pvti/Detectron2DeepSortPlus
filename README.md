@@ -5,7 +5,7 @@
 ![](readme/proposedFramework.png)
 ![Alt Text](https://media.giphy.com/media/MCjhfIlUY9udz9yOuS/giphy.gif)
 
-> More details can be found [here] (readme/Readme_Extended.pdf) \
+> More details can be found [here] (https://drive.google.com/file/d/1Vtrm9ewhfSIzIgXPKQhZ0iJUg47X85cr/view?usp=sharing) \
 > Contact: [pvtien96@gmail.com](mailto:pvtien96@gmail.com). Discussions are welcome!
 
 ## Abstract
