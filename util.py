@@ -42,12 +42,32 @@ def draw_bboxes(img, bbox, identities, binary_masks=[], alpha = 0.33, offset=(0,
         y2 += offset[1]
         # box text and bar
         id = int(identities[i]) if identities is not None else 0    
-        color = COLORS_10[id%len(COLORS_10)]
+        # draw mask
+        if i < len(binary_masks):
+            mask = binary_masks[i]
+            color = COLORS_10[0] #make all masks same color
+            for c in range(3):
+                img[:, :, c] = np.where(mask > 0, img[:, :, c] * (1-alpha) + alpha*color[c]*255, img[:, :, c])
+        #color = COLORS_10[id%len(COLORS_10)]
         label = '{}{:d}'.format("", id)
         t_size = cv2.getTextSize(label, cv2.FONT_HERSHEY_PLAIN, 2 , 2)[0]
-        cv2.rectangle(img,(x1, y1),(x2,y2),color,3)
-        cv2.rectangle(img,(x1, y1),(x1+t_size[0]+3,y1+t_size[1]+4), color,-1)
-        cv2.putText(img,label,(x1,y1+t_size[1]+4), cv2.FONT_HERSHEY_PLAIN, 2, [255,255,255], 2)
+        if (id==1):
+            color = (0, 0, 255)
+        elif (id==4):
+            color = (128, 255, 255)
+        elif (id==8):
+            color = (255, 0, 0)
+        elif (id==2):
+            color = (255, 0, 0)
+        elif (id==7):
+            color = (255, 0, 128)
+        elif (id==5):
+            color = (0, 255, 0)
+        else:
+            color = COLORS_10[id%len(COLORS_10)]
+        cv2.rectangle(img,(x1, y1),(x2,y2),color,60)
+        cv2.rectangle(img,(x1, y1),(x1+t_size[0]+5,y1+t_size[1]+6), color,-1)
+        cv2.putText(img,label,(x1,y1+t_size[1]+6), cv2.FONT_HERSHEY_PLAIN, fontScale=6, color = [255,255,255], thickness=4)
         
         #draw trajectories
         center = (int((x1+x2)/2), int((y1+y2)/2))
@@ -57,16 +77,9 @@ def draw_bboxes(img, bbox, identities, binary_masks=[], alpha = 0.33, offset=(0,
         for j in range(1, len(pts[id])):
             if pts[id][j-1] is None or pts[id][j] is None:
                 continue
-            thickness = int(np.sqrt(64/float(j+1))*2)
+            thickness = int(np.sqrt(64/float(j+1))*10)
             #print((pts[id][j-1]), (pts[id][j]), (color), thickness)
             cv2.line(img, (pts[id][j-1]), (pts[id][j]), (color), thickness)
-        
-        # draw mask
-        if i < len(binary_masks):
-            mask = binary_masks[i]
-            color = COLORS_10[0] #make all masks same color
-            for c in range(3):
-                img[:, :, c] = np.where(mask > 0, img[:, :, c] * (1-alpha) + alpha*color[c]*255, img[:, :, c])
     return img
 
 def draw_polys(im, polys):
@@ -90,8 +103,6 @@ def softmin(x):
     assert isinstance(x, np.ndarray), "expect x be a numpy array"
     x_exp = np.exp(-x)
     return x_exp/x_exp.sum()
-
-
 
 if __name__ == '__main__':
     x = np.arange(10)/10.
