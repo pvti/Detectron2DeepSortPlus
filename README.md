@@ -3,7 +3,7 @@
 > Van-Tien Pham, Thanh-Hai Tran, Hai Vu;        
 
 ![](readme/proposedFramework.png)
-![Alt Text](https://media.giphy.com/media/MCjhfIlUY9udz9yOuS/giphy.gif)
+<img src="readme/bowl.gif" width="400"/>   <img src="readme/toy.gif" width="400"/>
 
 > More details can be found [here](https://drive.google.com/file/d/1Vtrm9ewhfSIzIgXPKQhZ0iJUg47X85cr/view?usp=sharing) and [here](https://youtube.com/playlist?list=PLWBYzJD_wkfs1yHwuUp2Gq9HGCfF5lWiF).\
 > Contact: [pvtien96@gmail.com](mailto:pvtien96@gmail.com). Discussions are welcome!
