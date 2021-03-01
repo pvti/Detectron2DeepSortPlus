@@ -13,7 +13,7 @@ Egocentric vision is an emerging field of computer vision characterized by the a
 
 ## News
 - **[2021.02.28]** Paper is submitted to [RIVF 2021](http://rivf.net/#/).
-- **[2020.10.31]** Related master thesis is successfully defended at [SOICT, HUST](https://soict.hust.edu.vn/).
+- **[2020.10.31]** Related [master thesis](https://drive.google.com/file/d/1Vtrm9ewhfSIzIgXPKQhZ0iJUg47X85cr/view?usp=sharing) is successfully defended at [SOICT, HUST](https://soict.hust.edu.vn/).
 - **[2020.06.04]** Demo code and pre-trained model released.
 
 
