@@ -1,5 +1,5 @@
-# Hand detection, segmentation and tracking from egocentric vision
-> [**Hand detection, segmentation and tracking from egocentric vision**](https://drive.google.com/file/d/1NBy_ycHNUJDd0zYmKa5PdgmYdfxtBrZM/view?usp=sharing),            
+# Detection and tracking hand from FPV: benchmarks and challenges on rehabilitation exercises dataset
+> [**Detection and tracking hand from FPV: benchmarks and challenges on rehabilitation exercises dataset**](https://drive.google.com/file/d/1rO0RTKC0oQ6smXz8R9Ea0O4PaffoGh6N/view?usp=sharing),            
 > Van-Tien Pham, Thanh-Hai Tran, Hai Vu;        
 
 ![](readme/proposedFramework.png)
@@ -9,7 +9,13 @@
 > Contact: [pvtien96@gmail.com](mailto:pvtien96@gmail.com). Discussions are welcome!
 
 ## Abstract
-Egocentric vision is an emerging field of computer vision characterized by the acquisition video from the first person perspective in which hand is essential in the execution of activity and portraying its trajectory is the principal cue for action recognition. We develop a fully automatic tracking by detection pipeline that extracts hands positions and identities in consequence frames. The proposed framework consists of state of the art detectors from RCNN and YOLO family models combined with the SORT or DeepSORT for tracking task. This paper aims to explore how the stand alone performance of the object detection algorithm correlates with overall performance of a tracking by detection system. Results reports that the capacity of the object detection algorithm is highly indicative of the overall performance. Further, this work also shows how the use of visual descriptors in the tracking stage can reduce the number of identity switches and thereby increase performance of the whole system. We also presents a new egocentric hand tracking dataset Micand32 for future researches.
+Egocentric vision is an emerging field of computer vision characterized by the acquisition video from the first person perspective. Particularly, for evaluating upper extremity rehabilitation, egocentric vision offers the ability to quantitatively measure the function of hands used in physical-based exercises. For such applications, hand detection and tracking are the first requirement. In this work, we develop a fully automatic tracking by detection pipeline that firstly extracts hands positions and then tracks hands in consecutive frames. The proposed framework consists of state of the art detectors such as RCNN and YOLO family models coupled with state-of-the-art trackers (e.g., SORT and DeepSORT) for tracking task. This paper explores how performance of the stand alone object detection algorithms correlates with overall performance of a tracking by detection system. The experimental results show that detection highly impacts the overall performance. Moreover, this work also proves that the use of visual descriptors in the tracking stage can reduce the number of identity switches and thereby increase potential of the whole system. We also present challenges for new egocentric hand tracking dataset for future works.
+
+## News
+- **[2021.02.28]** Paper is submitted to [RIVF 2021](http://rivf.net/#/).
+- **[2020.10.31]** Related master thesis is successfully defended at [SOICT, HUST](https://soict.hust.edu.vn/).
+- **[2020.06.04]** Demo code and pre-trained model released.
+
 
 ## Main results
 
@@ -50,7 +56,7 @@ If you use this work in your research or wish to refer to the results, please us
 ```BibTeX
 @misc{tien2021d2dp,
   author =       {Van-Tien Pham and Thanh-Hai Tran and Hai Vu},
-  title =        {Hand detection, segmentation and tracking from egocentric vision},
+  title =        {Detection and tracking hand from FPV: benchmarks and challenges on rehabilitation exercises dataset},
   howpublished = {\url{https://github.com/pvtien96/Detectron2DeepSortPlus}},
   year =         {2021}
 }
