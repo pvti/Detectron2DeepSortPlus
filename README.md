@@ -12,8 +12,8 @@
 Egocentric vision is an emerging field of computer vision characterized by the acquisition video from the first person perspective. Particularly, for evaluating upper extremity rehabilitation, egocentric vision offers the ability to quantitatively measure the function of hands used in physical-based exercises. For such applications, hand detection and tracking are the first requirement. In this work, we develop a fully automatic tracking by detection pipeline that firstly extracts hands positions and then tracks hands in consecutive frames. The proposed framework consists of state of the art detectors such as RCNN and YOLO family models coupled with state-of-the-art trackers (e.g., SORT and DeepSORT) for tracking task. This paper explores how performance of the stand alone object detection algorithms correlates with overall performance of a tracking by detection system. The experimental results show that detection highly impacts the overall performance. Moreover, this work also proves that the use of visual descriptors in the tracking stage can reduce the number of identity switches and thereby increase potential of the whole system. We also present challenges for new egocentric hand tracking dataset for future works.
 
 ## News
-- **[2021.02.28]** Paper is submitted to [RIVF 2021](http://rivf.net/#/).
-- **[2020.10.31]** Related [master thesis](https://drive.google.com/file/d/1Vtrm9ewhfSIzIgXPKQhZ0iJUg47X85cr/view?usp=sharing) is successfully defended at [SOICT, HUST](https://soict.hust.edu.vn/).
+- **[2021.04.10]** Paper is accepted to [RIVF 2021](http://rivf.net/#/).
+- **[2020.10.31]** Related [master thesis](https://drive.google.com/file/d/1baZPGa51-un6Gs2KTctRDWQFp_VY2gdN/view?usp=sharing) is successfully defended at [SOICT, HUST](https://soict.hust.edu.vn/).
 - **[2020.06.04]** Demo code and pre-trained model released.
 
 
@@ -27,7 +27,7 @@ Object detection and segmentation AP and AR following the COCO standard.
 | FasterRCNN | 96.2 | 97.9 | 97.9 |       0.9      |       75.8      |       6.3      |       9.6      |       76.8      |       97.6       |      10.0      |       77.8      |      97.6      |
 |  MaskRCNN  | 92.1 | 98.9 | 97.9 |       0.0      |       32.4      |      92.2      |       9.2      |       73.9      |       94.6       |       0.0      |       50.8      |      94.7      |
 
-Tracking result on Micand32 following MOT16 evaluation protocol.
+Tracking result on MICARehab following MOT16 evaluation protocol.
 | Method | IDF1 | IDP  | IDR  | Rcll | Prcn | GT | MT | PT | ML | FP  | FN   | IDs | FM  | MOTA | MOTP  |
 |--------|------|------|------|------|------|----|----|----|----|-----|------|-----|-----|------|-------|
 | Y3S    | 51.4 | 59.4 | 45.2 | 75.3 | 99.4 | 24 | 7  | 8  | 9  | 68  | 3630 | 123 | 174 | 74.1 | 0.133 |
@@ -44,6 +44,20 @@ Tracking result on Micand32 following MOT16 evaluation protocol.
 ## Installation
 
 Please refer to [INSTALL.md](readme/INSTALL.md) for installation instructions.
+
+## Model zoo
+
+Trained models are available in the [MODEL_ZOO.md](readme/MODEL_ZOO.md).
+
+## Dataset zoo
+
+Please see [DATASET_ZOO.md](readme/DATASET_ZOO.md) for detailed description of the training/evaluation datasets.
+
+## Getting Started
+
+Follow the aforementioned instructions to install D2DP and download models and datasets.
+
+[GETTING_STARTED.md](readme/GETTING_STARTED) provides a brief intro of the usage of builtin command-line tools in D2DP.
 
 ## License
 
