@@ -61,9 +61,13 @@ and if you use any of these datasets in your research, please cite the original 
     For example, 
     
     ```
-    python visualize_gt.py --input /path/to/GH010383_8_3221_3956_2/ --display True --out_vid out_vid.avi
+    python visualize_gt.py --input /path/to/GH010373_6_3150_4744/ --display True --out_vid out_vid.avi
     ```
-    will show the groundtruth for the input video and also save this to out_vid.avi.
+    will show the groundtruth for the input video and also save this to out_vid.avi as follow:
+    
+    <img src="GH010373_6_3150_4744_groundtruth.gif" />
+    
+    Full 32 original quality groundtruth videos are uploaded to this [youtube link](https://youtube.com/playlist?list=PLWBYzJD_wkfs6mab6b8lE1otKp9yqdSoO).
     
     +MOT16 format: 'gt.txt'.
     
