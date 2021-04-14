@@ -64,6 +64,7 @@ and if you use any of these datasets in your research, please cite the original 
     python visualize_gt.py --input /path/to/GH010383_8_3221_3956_2/ --display True --out_vid out_vid.avi
     ```
     will show the groundtruth for the input video and also save this to out_vid.avi.
+    
     +MOT16 format: 'gt.txt'.
     
     This is saved in simple comma-separated value (CSV) files. Each line represents one object instance and contains 9 values.
@@ -89,6 +90,8 @@ and if you use any of these datasets in your research, please cite the original 
     ```
     
     In this case, there are 2 hand in the first frame of the sequence, with identity tags 1, 2 and 1 hand in the second frame with identity tags 1.
+    
+    This format is useful for evaluating MOT16 metrics with [py-motmetrics](https://github.com/cheind/py-motmetrics).
     
     More detail can be found in the paper:
     ```
