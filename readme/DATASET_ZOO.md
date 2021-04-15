@@ -65,7 +65,8 @@ and if you use any of these datasets in your research, please cite the original 
     ```
     will show the groundtruth for the input video and also save this to out_vid.avi as follow:
     
-    <img src="GH010373_6_3150_4744_groundtruth.gif" />
+    <img src="GH010373_6_3150_4744_groundtruth.gif" width="450"/>
+    <img src="GH010383_5_462_968_1_groundtruth.gif" width="450"/>
     
     Full 32 original quality groundtruth videos are uploaded to this [youtube link](https://youtube.com/playlist?list=PLWBYzJD_wkfs6mab6b8lE1otKp9yqdSoO).
     
