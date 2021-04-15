@@ -1,9 +1,9 @@
 # Detection and tracking hand from FPV: benchmarks and challenges on rehabilitation exercises dataset
-> [**Detection and tracking hand from FPV: benchmarks and challenges on rehabilitation exercises dataset**](https://drive.google.com/file/d/1rO0RTKC0oQ6smXz8R9Ea0O4PaffoGh6N/view?usp=sharing),            
+> [**Detection and tracking hand from FPV: benchmarks and challenges on rehabilitation exercises dataset**](https://drive.google.com/drive/folders/1dNum1GOpYlmHObAR3JvAZqZjTQt1LxRT?usp=sharing),            
 > Van-Tien Pham, Thanh-Hai Tran, Hai Vu;        
 
 ![](readme/proposedFramework.png)
-<img src="readme/bowl.gif" width="465"/>   <img src="readme/toy.gif" width="465"/>
+<img src="readme/bowl.gif" width="450"/>   <img src="readme/toy.gif" width="450"/>
 
 > More details can be found [here](https://drive.google.com/drive/folders/1dNum1GOpYlmHObAR3JvAZqZjTQt1LxRT?usp=sharing) and [here](https://youtube.com/playlist?list=PLWBYzJD_wkfs1yHwuUp2Gq9HGCfF5lWiF).\
 > Contact: [pvtien96@gmail.com](mailto:pvtien96@gmail.com). Discussions are welcome!
