@@ -3,15 +3,16 @@
 > Van-Tien Pham, Thanh-Hai Tran, Hai Vu;        
 
 ![](readme/proposedFramework.png)
-<img src="readme/bowl.gif" width="400"/>   <img src="readme/toy.gif" width="400"/>
+<img src="readme/bowl.gif" width="470"/>   <img src="readme/toy.gif" width="470"/>
 
-> More details can be found [here](https://drive.google.com/file/d/1Vtrm9ewhfSIzIgXPKQhZ0iJUg47X85cr/view?usp=sharing) and [here](https://youtube.com/playlist?list=PLWBYzJD_wkfs1yHwuUp2Gq9HGCfF5lWiF).\
+> More details can be found [here](https://drive.google.com/drive/folders/1dNum1GOpYlmHObAR3JvAZqZjTQt1LxRT?usp=sharing) and [here](https://youtube.com/playlist?list=PLWBYzJD_wkfs1yHwuUp2Gq9HGCfF5lWiF).\
 > Contact: [pvtien96@gmail.com](mailto:pvtien96@gmail.com). Discussions are welcome!
 
 ## Abstract
 Egocentric vision is an emerging field of computer vision characterized by the acquisition video from the first person perspective. Particularly, for evaluating upper extremity rehabilitation, egocentric vision offers the ability to quantitatively measure the function of hands used in physical-based exercises. For such applications, hand detection and tracking are the first requirement. In this work, we develop a fully automatic tracking by detection pipeline that firstly extracts hands positions and then tracks hands in consecutive frames. The proposed framework consists of state of the art detectors such as RCNN and YOLO family models coupled with state-of-the-art trackers (e.g., SORT and DeepSORT) for tracking task. This paper explores how performance of the stand alone object detection algorithms correlates with overall performance of a tracking by detection system. The experimental results show that detection highly impacts the overall performance. Moreover, this work also proves that the use of visual descriptors in the tracking stage can reduce the number of identity switches and thereby increase potential of the whole system. We also present challenges for new egocentric hand tracking dataset for future works.
 
 ## News
+- **[2021.04.15]** [MICARehab](https://drive.google.com/file/d/1ICEgkyGkPQRTa7eY1gMkbMxx-XFVQTk3/view?usp=sharing) dataset released as a benchmark for hand detection and tracking from FPV.
 - **[2021.04.10]** Paper is accepted to [RIVF 2021](http://rivf.net/#/).
 - **[2020.10.31]** Related [master thesis](https://drive.google.com/file/d/1baZPGa51-un6Gs2KTctRDWQFp_VY2gdN/view?usp=sharing) is successfully defended at [SOICT, HUST](https://soict.hust.edu.vn/).
 - **[2020.06.04]** Demo code and pre-trained model released.
@@ -57,7 +58,7 @@ Please see [DATASET_ZOO.md](readme/DATASET_ZOO.md) for detailed description of t
 
 Follow the aforementioned instructions to install D2DP and download models and datasets.
 
-[GETTING_STARTED.md](readme/GETTING_STARTED) provides a brief intro of the usage of builtin command-line tools in D2DP.
+[GETTING_STARTED.md](readme/GETTING_STARTED.md) provides a brief intro of the usage of builtin command-line tools in D2DP.
 
 ## License
 
