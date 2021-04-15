@@ -29,7 +29,7 @@ and if you use any of these datasets in your research, please cite the original 
     
     We provide 2 ways to access labels: 
     
-    + VIA format: 'via_export_json.json'
+    + **VIA format: 'via_export_json.json'**
     
         Annotation of each image is as follow:
     
@@ -73,7 +73,7 @@ and if you use any of these datasets in your research, please cite the original 
     
     Full 32 original quality groundtruth videos are uploaded to this [youtube link](https://youtube.com/playlist?list=PLWBYzJD_wkfs6mab6b8lE1otKp9yqdSoO).
     
-    +MOT16 format: 'gt.txt'.
+    + **MOT16 format: 'gt.txt'.**
     
     This is saved in simple comma-separated value (CSV) files. Each line represents one object instance and contains 9 values.
     
