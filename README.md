@@ -50,7 +50,7 @@ If you use this work in your research or wish to refer to the results, please us
 ```BibTeX
 @misc{tien2021d2dp,
   author =       {Van-Tien Pham and Thanh-Hai Tran and Hai Vu},
-  title =        {Detection and tracking hand from FPV: benchmarks and challenges on rehabilitation exercises dataset},
+  title =        {Detectron2DeepSortPlus},
   howpublished = {\url{https://github.com/pvtien96/Detectron2DeepSortPlus}},
   year =         {2021}
 }
