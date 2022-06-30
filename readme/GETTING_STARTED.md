@@ -40,5 +40,5 @@ optional arguments:
 Model inference example:
 
 ~~~
-    python dt2ds.py --input ./in_vid.avi --config-file --config-file ../detectron2/configs/COCO-Detection/faster_rcnn_R_50_FPN_3x.yaml --tracker sort --out_vid ./out.vid.avi --opts MODEL_WEIGHTS ./fasterrcnnr50fpn3x.pth
+    python dt2ds.py --input ./in_vid.avi --config-file --config-file ../detectron2/configs/COCO-Detection/faster_rcnn_R_50_FPN_3x.yaml --tracker sort --out_vid ./out.vid.avi --opts MODEL.WEIGHTS ./fasterrcnnr50fpn3x.pth
 ~~~
