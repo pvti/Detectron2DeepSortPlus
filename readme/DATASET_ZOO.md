@@ -103,12 +103,15 @@ and if you use any of these datasets in your research, please cite the original 
     
     More detail can be found in the paper:
     ```
-    @misc{tien2021d2dp,
-      author =       {Van-Tien Pham and Thanh-Hai Tran and Hai Vu},
-      title =        {Detection and tracking hand from FPV: benchmarks and challenges on rehabilitation exercises dataset},
-      howpublished = {\url{https://github.com/pvtien96/Detectron2DeepSortPlus}},
-      year =         {2021}
-    }
+    @INPROCEEDINGS{9642078,
+    author={Pham, Van-Tien and Tran, Thanh-Hai and Vu, Hai},
+    booktitle={2021 RIVF International Conference on Computing and Communication Technologies (RIVF)},
+    title={Detection and tracking hand from FPV: benchmarks and challenges on rehabilitation exercises dataset},
+    year={2021},
+    volume={},
+    number={},
+    pages={1-6},
+    doi={10.1109/RIVF51545.2021.9642078}}
     ```
 
 2. [EgoHands](http://vision.soic.indiana.edu/projects/egohands/)

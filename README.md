@@ -48,10 +48,13 @@ Code is released under the [Apache 2.0 license](LICENSE).
 If you use this work in your research or wish to refer to the results, please use the following BibTeX entry.
 
 ```BibTeX
-@misc{tien2021d2dp,
-  author =       {Van-Tien Pham and Thanh-Hai Tran and Hai Vu},
-  title =        {Detectron2DeepSortPlus},
-  howpublished = {\url{https://github.com/pvtien96/Detectron2DeepSortPlus}},
-  year =         {2021}
-}
+@INPROCEEDINGS{9642078,
+  author={Pham, Van-Tien and Tran, Thanh-Hai and Vu, Hai},
+  booktitle={2021 RIVF International Conference on Computing and Communication Technologies (RIVF)},
+  title={Detection and tracking hand from FPV: benchmarks and challenges on rehabilitation exercises dataset},
+  year={2021},
+  volume={},
+  number={},
+  pages={1-6},
+  doi={10.1109/RIVF51545.2021.9642078}}
 ```
