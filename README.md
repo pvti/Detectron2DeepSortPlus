@@ -76,20 +76,21 @@ Follow the aforementioned instructions to install D2DP and download models and d
 ## :+1: Supplementary materials
 More details can be found [here](https://youtube.com/playlist?list=PLWBYzJD_wkfs1yHwuUp2Gq9HGCfF5lWiF).
 
+<p align="center" width="100%">
 <img src="readme/proposedFramework.png" width="50%" height="50%">
+</p>
 
 ## :call_me_hand: Citation
 
 If you use this work in your research or wish to refer to the results, please use the following BibTeX entry.
 
 ```BibTeX
-@INPROCEEDINGS{9642078,
+@inproceedings{pham2021detection,
+  title={Detection and tracking hand from FPV: benchmarks and challenges on rehabilitation exercises dataset},
   author={Pham, Van-Tien and Tran, Thanh-Hai and Vu, Hai},
   booktitle={2021 RIVF International Conference on Computing and Communication Technologies (RIVF)},
-  title={Detection and tracking hand from FPV: benchmarks and challenges on rehabilitation exercises dataset},
+  pages={1--6},
   year={2021},
-  volume={},
-  number={},
-  pages={1-6},
-  doi={10.1109/RIVF51545.2021.9642078}}
+  organization={IEEE}
+}
 ```
