@@ -1,17 +1,29 @@
-# Detection and tracking hand from FPV: benchmarks and challenges on rehabilitation exercises dataset ![Visitors](https://api.visitorbadge.io/api/visitors?path=https%3A%2F%2Fgithub.com%2Fpvtien96%2FDetectron2DeepSortPlus&countColor=%232ccce4)
-> [**Detection and tracking hand from FPV: benchmarks and challenges on rehabilitation exercises dataset**](https://drive.google.com/drive/folders/1dNum1GOpYlmHObAR3JvAZqZjTQt1LxRT?usp=sharing),            
-> Van-Tien Pham, Thanh-Hai Tran, Hai Vu;
+![Visitors](https://api.visitorbadge.io/api/visitors?path=https%3A%2F%2Fgithub.com%2Fpvtien96%2FDetectron2DeepSortPlus&countColor=%232ccce4)
+# :v: Detection and tracking hand from FPV: benchmarks and challenges on rehabilitation exercises dataset 
+<div>
+<div align="center">
+    <a href='https://github.com/pvtien96' target='_blank'>Van-Tien Pham<sup>1,3&#x2709</sup></a>&emsp;
+    <a href='https://mica.edu.vn/perso/Tran-Thi-Thanh-Hai/' target='_blank'>Thanh-Hai Tran<sup>2,3</sup></a>&emsp;
+    <a href='https://www.mica.edu.vn/perso/Vu-Hai/resume.html' target='_blank'>Hai Vu<sup>2,3</sup></a>&emsp;
+</div>
+<div>
 
-![](readme/proposedFramework.png)
-<img src="readme/bowl.gif" width="400"/>   <img src="readme/toy.gif" width="400"/>
+<div align="center">
+    <sup>1</sup><em>Modelling and Simulation Centre, Viettel High Technology Industries Corporation, Vietnam</em>&emsp;
+    <sup>2</sup><em>School of Electronics and Telecommunications, Hanoi University of Science and Technology, Vietnam</em>&emsp;
+    <sup>3</sup><em>International Research Institute MICA, Hanoi University of Science and Technology, Vietnam</em>&emsp;
+    <sup>&#x2709</sup><em>Corresponding Author</em>
+</div>
 
-> More details can be found [here](https://drive.google.com/drive/folders/1dNum1GOpYlmHObAR3JvAZqZjTQt1LxRT?usp=sharing) and [here](https://youtube.com/playlist?list=PLWBYzJD_wkfs1yHwuUp2Gq9HGCfF5lWiF).\
-> Contact: [pvtien96@gmail.com](mailto:pvtien96@gmail.com). Discussions are welcome!
+<div style="text-align: justify"> Egocentric vision is an emerging field of computer vision characterized by the acquisition of video from the first-person perspective. Particularly, for evaluating upper extremity rehabilitation, egocentric vision offers the ability to quantitatively measure the function of hands used in physical-based exercises. For such applications, hand detection and tracking are the first requirements. In this work, we develop a fully automatic tracking-by-detection pipeline that firstly extracts hand positions and then tracks hands in consecutive frames. The proposed framework consists of state-of-the-art detectors such as RCNN and YOLO family models coupled with advanced trackers (e.g., SORT and DeepSORT) for the tracking task. This paper explores how the performance of the stand-alone object detection algorithms correlates with overall performance of the tracking-by-detection system. The experimental results show that detection highly impacts the overall performance. Moreover, this work also proves that the use of visual descriptors in the tracking stage can reduce the number of identity switches and thereby increase the potential of the whole system. We also present challenges for new egocentric hand-tracking dataset for future works. </div>
 
-## Abstract
-Egocentric vision is an emerging field of computer vision characterized by the acquisition video from the first person perspective. Particularly, for evaluating upper extremity rehabilitation, egocentric vision offers the ability to quantitatively measure the function of hands used in physical-based exercises. For such applications, hand detection and tracking are the first requirement. In this work, we develop a fully automatic tracking by detection pipeline that firstly extracts hands positions and then tracks hands in consecutive frames. The proposed framework consists of state of the art detectors such as RCNN and YOLO family models coupled with state-of-the-art trackers (e.g., SORT and DeepSORT) for tracking task. This paper explores how performance of the stand alone object detection algorithms correlates with overall performance of a tracking by detection system. The experimental results show that detection highly impacts the overall performance. Moreover, this work also proves that the use of visual descriptors in the tracking stage can reduce the number of identity switches and thereby increase potential of the whole system. We also present challenges for new egocentric hand tracking dataset for future works.
+<p align="center" width="100%">
+  <img src="readme/bowl.gif" width="49%"/>   <img src="readme/toy.gif" width="49%"/>
+</p>
 
-## News
+
+
+## :clap: News
 - **[2021.08.21]** Best runner-up presentation award at RIVF 2021.
 - **[2021.04.15]** [MICARehab](https://drive.google.com/file/d/1ICEgkyGkPQRTa7eY1gMkbMxx-XFVQTk3/view?usp=sharing) dataset released as a benchmark for hand detection and tracking from FPV.
 - **[2021.04.10]** Paper is accepted to [RIVF 2021](http://rivf.net/#/).
@@ -19,7 +31,7 @@ Egocentric vision is an emerging field of computer vision characterized by the a
 - **[2020.06.04]** Demo code and pre-trained model released.
 
 
-## Main results
+## :ok_hand: Main results
 Object detection and segmentation AP and AR following the COCO standard.
 |  Algorithm |  AP  | AP50 | AP75 | APsmall | APmedium | APlarge | ARmax=1 | ARmax=10 | ARmax=100 | ARsmall | ARmedium | ARlarge |
 |:----------:|:----:|:----:|:----:|:--------------:|:---------------:|:--------------:|:--------------:|:---------------:|:----------------:|:--------------:|:---------------:|:--------------:|
@@ -43,29 +55,30 @@ Tracking result on MICARehab following MOT16 evaluation protocol.
 | GDS    | 88.5 | 88.5 | 88.1 | 99.1 | 99.9 | 24 | 23 | 1  | 0  | 12  | 135  | 82  | 43  | 98.4 | 0.052 |
 
 
-## Installation
+## :point_right: Installation
 
 Please refer to [INSTALL.md](readme/INSTALL.md) for installation instructions.
 
-## Model zoo
+## :raised_hands: Model zoo
 
 Trained models are available in the [MODEL_ZOO.md](readme/MODEL_ZOO.md).
 
-## Dataset zoo
+## :open_hands: Dataset zoo
 
-Please see [DATASET_ZOO.md](readme/DATASET_ZOO.md) for detailed description of the training/evaluation datasets.
+Please see [DATASET_ZOO.md](readme/DATASET_ZOO.md) for a detailed description of the training/evaluation datasets.
 
-## Getting Started
+## :point_down: Getting Started
 
 Follow the aforementioned instructions to install D2DP and download models and datasets.
 
-[GETTING_STARTED.md](readme/GETTING_STARTED.md) provides a brief intro of the usage of builtin command-line tools in D2DP.
+[GETTING_STARTED.md](readme/GETTING_STARTED.md) provides a brief intro of the usage of built-in command-line tools in D2DP.
 
-## License
+## :+1: Supplementary materials
+More details can be found [here](https://youtube.com/playlist?list=PLWBYzJD_wkfs1yHwuUp2Gq9HGCfF5lWiF).
 
-Code is released under the [Apache 2.0 license](LICENSE).
+<img src="readme/proposedFramework.png" width="50%" height="50%">
 
-## Citing
+## :call_me_hand: Citation
 
 If you use this work in your research or wish to refer to the results, please use the following BibTeX entry.
 
