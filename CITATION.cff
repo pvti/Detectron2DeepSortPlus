@@ -21,4 +21,6 @@ preferred-citation:
   - family-names: Vu
     given-names:  Hai
   title: "Detection and tracking hand from FPV: benchmarks and challenges on rehabilitation exercises dataset"
+  journal: "2021 RIVF International Conference on Computing and Communication Technologies (RIVF)"
+  doi: "10.1109/RIVF51545.2021.9642078"
   year: 2021
