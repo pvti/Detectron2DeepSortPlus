@@ -1,8 +1,8 @@
-![Visitors](https://api.visitorbadge.io/api/visitors?path=https%3A%2F%2Fgithub.com%2Fpvtien96%2FDetectron2DeepSortPlus&countColor=%232ccce4)
+![Visitors](https://api.visitorbadge.io/api/visitors?path=https%3A%2F%2Fgithub.com%2Fpvti%2FDetectron2DeepSortPlus&countColor=%232ccce4)
 # :v: Detection and tracking hand from FPV: benchmarks and challenges on rehabilitation exercises dataset 
 <div>
 <div align="center">
-    <a href='https://github.com/pvtien96' target='_blank'>Van-Tien Pham<sup>1,3&#x2709</sup></a>&emsp;
+    <a href='https://github.com/pvti' target='_blank'>Van-Tien Pham<sup>1,3&#x2709</sup></a>&emsp;
     <a href='https://mica.edu.vn/perso/Tran-Thi-Thanh-Hai/' target='_blank'>Thanh-Hai Tran<sup>2,3</sup></a>&emsp;
     <a href='https://www.mica.edu.vn/perso/Vu-Hai/resume.html' target='_blank'>Hai Vu<sup>2,3</sup></a>&emsp;
 </div>
